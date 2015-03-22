@@ -775,7 +775,8 @@ class Ledis(object):
     def scan_generic(self, scan_type, key="", match=None, count=10):
         pieces = [key]
         if match is not None:
-            pieces.extend([Token("MATCH"), match])
+            #pieces.extend([Token("MATCH"), match])
+            pieces.extend([match])
         pieces.extend([Token("count"), count])
         scan_type = scan_type.upper()
         return self.execute_command(scan_type, *pieces)
@@ -876,7 +877,7 @@ class Ledis(object):
         return self.execute_command('HPERSIST', name)
 
     def hxscan(self, key="", match=None, count=10):
-        return self.scan_generic("HXSCAN", key=key, match=match, count=count)
+        return self.scan_generic("XHSCAN", key=key, match=match, count=count)
 
 
     ### BIT COMMANDS
