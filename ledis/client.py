@@ -199,7 +199,7 @@ class Ledis(object):
     def set_response_callback(self, command, callback):
         "Set a custom Response Callback"
         self.response_callbacks[command] = callback
- 
+
     def tx(self):
         return Transaction(
             self.connection_pool,
@@ -240,7 +240,7 @@ class Ledis(object):
 
     def info(self, section=None):
         """
-        Return 
+        Return
         """
 
         if section is None:
@@ -629,7 +629,7 @@ class Ledis(object):
         """
         if desc:
             return self.zrevrange(name, start, end, withscores)
-                                  
+
         pieces = ['ZRANGE', name, start, end]
         if withscores:
             pieces.append('withscores')
@@ -830,6 +830,12 @@ class Ledis(object):
             items.extend(pair)
         return self.execute_command('HMSET', name, *items)
 
+    def iset(self, name, key, value):
+        return self.execute_command('ISET', name, key, value)
+
+    def ifind(self, name, key, value):
+        return self.execute_command('IFIND', name, key, value)
+
     def hset(self, name, key, value):
         """
         Set ``key`` to ``value`` within hash ``name``
@@ -852,7 +858,7 @@ class Ledis(object):
 
     def hexpire(self, name, time):
         """
-        Set an expire flag on key name for time milliseconds. 
+        Set an expire flag on key name for time milliseconds.
         time can be represented by an integer or a Python timedelta object.
         """
         if isinstance(time, datetime.timedelta):
@@ -861,7 +867,7 @@ class Ledis(object):
 
     def hexpireat(self, name, when):
         """
-        Set an expire flag on key name. when can be represented as an integer representing 
+        Set an expire flag on key name. when can be represented as an integer representing
         unix time in milliseconds (unix time * 1000) or a Python datetime object.
         """
         if isinstance(when, datetime.datetime):
@@ -967,7 +973,7 @@ class Ledis(object):
         n = len(keys)
         args = list_or_args(keys, args)
         return self.execute_command('EVALSHA', sha1, n, *args)
-        
+
     def scriptload(self, script):
         return self.execute_command('SCRIPT', 'LOAD', script)
 
