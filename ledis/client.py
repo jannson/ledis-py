@@ -830,8 +830,14 @@ class Ledis(object):
             items.extend(pair)
         return self.execute_command('HMSET', name, *items)
 
+    def idbnew(self, key, value):
+        return self.execute_command('IDBNEW', key, value)
+
     def iset(self, name, key, value):
         return self.execute_command('ISET', name, key, value)
+
+    def iget(self, name, key, value):
+        return self.execute_command('IGET', name, key, value)
 
     def ifind(self, name, key, value):
         return self.execute_command('IFIND', name, key, value)
