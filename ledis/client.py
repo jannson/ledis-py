@@ -381,8 +381,8 @@ class Ledis(object):
         "Removes an expiration on name"
         return self.execute_command('PERSIST', name)
 
-    def xscan(self, key="" , match=None, count=10):
-        pieces = [key]
+    def xscan(self, ktype="", key="" , match=None, count=10):
+        pieces = [ktype, key]
         if match is not None:
             pieces.extend(["MATCH", match])
 
@@ -775,8 +775,7 @@ class Ledis(object):
     def scan_generic(self, scan_type, key="", match=None, count=10):
         pieces = [key]
         if match is not None:
-            #pieces.extend([Token("MATCH"), match])
-            pieces.extend([match])
+            pieces.extend([Token("MATCH"), match])
         pieces.extend([Token("count"), count])
         scan_type = scan_type.upper()
         return self.execute_command(scan_type, *pieces)
